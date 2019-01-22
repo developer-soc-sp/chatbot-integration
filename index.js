@@ -30,8 +30,11 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
   }
 
   function test(agent) {
-    agent.add(`This is a test`);
-
+    new Promise((resolve, reject) => {
+      agent.add(`This is a test`);
+      console.log(`This is a test`);
+        resolve("Good");
+    });
   }
 
   // Run the proper function handler based on the matched Dialogflow intent name
