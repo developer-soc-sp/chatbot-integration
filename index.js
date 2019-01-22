@@ -40,7 +40,7 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
     var params = {
       url: "https://www.t-mobile.com/content/dam/t-mobile/en-p/cell-phones/apple/apple-iphone-x/silver/Apple-iPhoneX-Silver-1-3x.jpg"
     };
-    new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       visualRecognition.classify(params, function (err, response) {
         if (err){
             console.log(err);
