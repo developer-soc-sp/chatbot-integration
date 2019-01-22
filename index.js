@@ -53,15 +53,14 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
           var categories = response.images[0].classifiers[0].classes;
           categories.sort(function(a, b){return b.score - a.score});
           categories.forEach(element => {
-              str += element.class + " :" + element.score + ", ";
+            if(element.score > 0.8 )
+              str += element.class + " :" + element.score + "\n";
           });
           //agent.add('Image contains: \n' + str);
           agent.add(new Card({
             title: `Image Details`,
             imageUrl: params.url,
             text: str,
-            buttonText: 'This is a button',
-            buttonUrl: 'https://assistant.google.com/'
           })
         );
           console.log(`This is a test`);
