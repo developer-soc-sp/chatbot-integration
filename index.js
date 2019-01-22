@@ -76,7 +76,7 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
   let intentMap = new Map();
   intentMap.set('Default Welcome Intent', welcome);
   intentMap.set('Default Fallback Intent', fallback);
-  intentMap.set('GetImageIntent', testImage);
+  intentMap.set('GetImageDetailIntent', testImage);
   agent.handleRequest(intentMap);
 });
 
