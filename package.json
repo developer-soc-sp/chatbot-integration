@@ -1,0 +1,19 @@
+{
+  "name": "chatbot-integration",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/developer-soc-sp/chatbot-integration.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/developer-soc-sp/chatbot-integration/issues"
+  },
+  "homepage": "https://github.com/developer-soc-sp/chatbot-integration#readme"
+}
