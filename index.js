@@ -50,7 +50,7 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
           let result = JSON.stringify(response, null, 2);
           console.log(response.images.constructor.name);
           console.log(response.images[0].classifiers[0].classes[0]);
-          agent.add('Image Test\n' + response.images.constructor.name + "\n" + result);
+          agent.add('The image contains ' + response.images[0].classifiers[0].classes[0]);
           
           agent.add(`This is a test`);
           console.log(`This is a test`);
