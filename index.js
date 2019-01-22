@@ -13,6 +13,7 @@ const {
 } = require('actions-on-google');
 var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 var VisualRecognitionV3 = require('watson-developer-cloud/visual-recognition/v3');
+var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
 
 const app = dialogflow();
 process.env.DEBUG = 'dialogflow:debug'; // enables lib debugging statements
@@ -39,22 +40,22 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
 
     var params = {
       //url: "https://www.t-mobile.com/content/dam/t-mobile/en-p/cell-phones/apple/apple-iphone-x/silver/Apple-iPhoneX-Silver-1-3x.jpg"
-      url : agent.parameters.url
+      url: agent.parameters.url
     };
     return new Promise((resolve, reject) => {
       visualRecognition.classify(params, function (err, response) {
-        if (err){
-            console.log(err);
-            agent.add("There is something wrong with the image link");
-            reject("Error");
+        if (err) {
+          console.log(err);
+          agent.add("There is something wrong with the image link");
+          reject("Error");
         }
         else {
           let result = JSON.stringify(response, null, 2);
           var str = "";
           var categories = response.images[0].classifiers[0].classes;
-          categories.sort(function(a, b){return b.score - a.score});
+          categories.sort(function (a, b) { return b.score - a.score });
           categories.forEach(element => {
-            if(element.score > 0.8 && element.type_hierarchy != null)
+            if (element.score > 0.8 && element.type_hierarchy != null)
               str += element.class + " :" + element.score + "\n";
           });
           //agent.add('Image contains: \n' + str);
@@ -63,7 +64,7 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
             imageUrl: params.url,
             text: str,
           })
-        );
+          );
           console.log(result);
           resolve("Good");
         }
@@ -71,12 +72,42 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
     });
   }
 
+  function testTone(agent) {
+    var toneAnalyzerV3 = new ToneAnalyzerV3({
+      version: '2017-09-21',
+      iam_apikey: 'P2UPaWmPWixPsdR70AKdKZEJY4HRifMvQ07GYGCgn_rf'
+    });
+
+    var text = 'Team, I know that times are tough! Product sales have been disappointing for the past three quarters. We have a competitive product, but we need to do a better job of selling it!'
+
+    var params = {
+      'tone_input': { 'text': text },
+      'content_type': 'application/json'
+    };
+    return new Promise((resolve, reject) => {
+      toneAnalyzerV3.tone(params, function (err, response) {
+        if (err) {
+          console.log(err);
+          agent.add("There is something wrong with the tone input");
+          reject("Error");
+        }
+        else {
+          let result = JSON.stringify(response, null, 2);
+          var str = "";
+          console.log(result);
+          agent.add("It is good");
+          resolve("Good");
+        }
+      });
+    });
+  }
 
   // Run the proper function handler based on the matched Dialogflow intent name
   let intentMap = new Map();
   intentMap.set('Default Welcome Intent', welcome);
   intentMap.set('Default Fallback Intent', fallback);
   intentMap.set('GetImageDetailIntent', testImage);
+  intentMap.set('GetToneDetailIntent', testTone);
   agent.handleRequest(intentMap);
 });
 
