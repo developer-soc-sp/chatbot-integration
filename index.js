@@ -54,7 +54,15 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
           categories.forEach(element => {
               str += element.class + " :" + element.score + ", ";
           });
-          agent.add('Image contains: \n' + str);
+          //agent.add('Image contains: \n' + str);
+          agent.add(new Card({
+            title: `Image Details`,
+            imageUrl: params.url,
+            text: str,
+            buttonText: 'This is a button',
+            buttonUrl: 'https://assistant.google.com/'
+          })
+        );
           console.log(`This is a test`);
           resolve("Good");
         }
