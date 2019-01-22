@@ -94,6 +94,12 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
         else {
           let result = JSON.stringify(response, null, 2);
           var str = "";
+          var categories = response.document_tone.tones;
+          categories.sort(function (a, b) { return b.score - a.score });
+          categories.forEach(element => {
+            if (element.score > 0.5)
+              str += element.tone_name + " :" + element.score + "\n";
+          });
           console.log(result);
           agent.add("It is good");
           resolve("Good");
