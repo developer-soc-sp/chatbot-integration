@@ -46,7 +46,7 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
         if (err){
             console.log(err);
             agent.add("There is something wrong with the image link");
-            resolve("Error");
+            reject("Error");
         }
         else {
           let result = JSON.stringify(response, null, 2);
