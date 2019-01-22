@@ -38,7 +38,7 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
   let intentMap = new Map();
   intentMap.set('Default Welcome Intent', welcome);
   intentMap.set('Default Fallback Intent', fallback);
-  intentMap.set('TestIntent',test);
+  intentMap.set('GetToneIntent',test);
   agent.handleRequest(intentMap);
 });
 
