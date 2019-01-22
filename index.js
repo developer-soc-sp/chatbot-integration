@@ -29,11 +29,21 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
     agent.add(`I'm sorry, can you try again?`);
   }
   
- 
-
   // Run the proper function handler based on the matched Dialogflow intent name
   let intentMap = new Map();
   intentMap.set('Default Welcome Intent', welcome);
   intentMap.set('Default Fallback Intent', fallback);
   agent.handleRequest(intentMap);
 });
+
+const expressApp = express().use(bodyParser.json());
+
+expressApp.post('/fulfillment', app.dialogflowFirebaseFulfillment);
+//expressApp.listen(3000);
+var listener = expressApp.listen(process.env.PORT, process.env.IP,
+  function(){
+  console.log("server started");
+  console.log("listening on port " +
+  listener.address().port);
+  }
+);
