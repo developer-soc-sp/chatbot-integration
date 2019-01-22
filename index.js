@@ -48,11 +48,13 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
         }
         else {
           let result = JSON.stringify(response, null, 2);
-          console.log(response.images.constructor.name);
-          console.log(response.images[0].classifiers[0].classes[0]);
-          agent.add('The image contains ' + response.images[0].classifiers[0].classes[0]);
-          
-          agent.add(`This is a test`);
+          var str = "";
+          var categories = response.images[0].classifiers[0].classes;
+          categories.sort(function(a, b){return a.score - b.score});
+          categories.forEach(element => {
+              str += element.class + " :" + element.score + ", ";
+          });
+          agent.add('Image contains: \n' + str);
           console.log(`This is a test`);
           resolve("Good");
         }
