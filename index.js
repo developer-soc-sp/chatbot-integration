@@ -41,11 +41,25 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
       url: "https://www.t-mobile.com/content/dam/t-mobile/en-p/cell-phones/apple/apple-iphone-x/silver/Apple-iPhoneX-Silver-1-3x.jpg"
     };
     new Promise((resolve, reject) => {
-      agent.add(`This is a test`);
-      console.log(`This is a test`);
-      resolve("Good");
+      visualRecognition.classify(params, function (err, response) {
+        if (err){
+            console.log(err);
+            reject("Error");
+        }
+        else {
+          let result = JSON.stringify(response, null, 2);
+          console.log(response.images.constructor.name);
+          console.log(response.images[0].classifiers[0].classes[0]);
+          res.end('Image Test\n' + response.images.constructor.name + "\n" + result);
+          
+          agent.add(`This is a test`);
+          console.log(`This is a test`);
+          resolve("Good");
+        }
+      });
     });
   }
+
 
   // Run the proper function handler based on the matched Dialogflow intent name
   let intentMap = new Map();
