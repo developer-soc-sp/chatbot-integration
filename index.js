@@ -54,7 +54,7 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
           var categories = response.images[0].classifiers[0].classes;
           categories.sort(function(a, b){return b.score - a.score});
           categories.forEach(element => {
-            if(element.score > 0.8 )
+            if(element.score > 0.8 && element.type_hierarchy != null)
               str += element.class + " :" + element.score + "\n";
           });
           //agent.add('Image contains: \n' + str);
