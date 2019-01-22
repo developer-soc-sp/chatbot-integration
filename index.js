@@ -31,7 +31,7 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
     agent.add(`I'm sorry, can you try again?`);
   }
 
-  function test(agent) {
+  function testImage(agent) {
     var visualRecognition = new VisualRecognitionV3({
       version: '2018-03-19',
       iam_apikey: 'Ae8wfpNwYI-OU88zzvem1L7iH0LzfUxdK1SElGV5VZQa'
@@ -76,7 +76,7 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
   let intentMap = new Map();
   intentMap.set('Default Welcome Intent', welcome);
   intentMap.set('Default Fallback Intent', fallback);
-  intentMap.set('GetToneIntent', test);
+  intentMap.set('GetImageIntent', testImage);
   agent.handleRequest(intentMap);
 });
 
