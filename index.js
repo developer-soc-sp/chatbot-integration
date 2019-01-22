@@ -45,6 +45,7 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
       visualRecognition.classify(params, function (err, response) {
         if (err){
             console.log(err);
+            agent.add("There is something wrong with the image link");
             reject("Error");
         }
         else {
@@ -63,7 +64,7 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
             text: str,
           })
         );
-          console.log(`This is a test`);
+          console.log(result);
           resolve("Good");
         }
       });
