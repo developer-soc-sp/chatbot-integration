@@ -78,7 +78,8 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
       iam_apikey: 'P2UPaWmPWixPsdR70AKdKZEJY4HRifMvQ07GYGCgn_rf'
     });
 
-    var text = 'Team, I know that times are tough! Product sales have been disappointing for the past three quarters. We have a competitive product, but we need to do a better job of selling it!'
+    var text = agent.parameters.sentence;
+    //'Team, I know that times are tough! Product sales have been disappointing for the past three quarters. We have a competitive product, but we need to do a better job of selling it!'
 
     var params = {
       'tone_input': { 'text': text },
