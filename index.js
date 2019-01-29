@@ -138,7 +138,7 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
               if(element.tone_name.toUpperCase() == "JOY")
                 str += "happy ";
               if(element.tone_name.toUpperCase() == "CONFIDENT")
-                str += "happy ";            }
+                str += "confident ";            }
           });
           str += ". Tell me more about it."
           console.log(result);
