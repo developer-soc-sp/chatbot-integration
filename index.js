@@ -143,7 +143,6 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
               if(element.tone_name.toUpperCase() == "SADNESS")
                 str += "sad"; 
               } 
-
           });
           str += ". Tell me more about it."
           console.log(result);
