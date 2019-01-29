@@ -132,13 +132,15 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
           var str = "You sounds ";
           var categories = response.document_tone.tones;
           categories.sort(function (a, b) { return b.score - a.score });
+          var i = 0;
           categories.forEach(element => {
             if (element.score > 0.5){
-              str += ", ";
+              if(i++ > 0 ) str += ", ";
               if(element.tone_name.toUpperCase() == "JOY")
-                str += "happy ";
+                str += "happy";
               if(element.tone_name.toUpperCase() == "CONFIDENT")
-                str += "confident ";            }
+                str += "confident";            
+              }
           });
           str += ". Tell me more about it."
           console.log(result);
