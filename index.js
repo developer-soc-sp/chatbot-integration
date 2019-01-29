@@ -149,7 +149,8 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
                   break; 
                   default:
                   str +=  val;                
-              } 
+              }
+            } 
           });
           str += ". Tell me more about it."
           console.log(result);
