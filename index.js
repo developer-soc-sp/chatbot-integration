@@ -108,13 +108,48 @@ app.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response
       });
     });
   }
+  function conversation(agent) {
+    var toneAnalyzerV3 = new ToneAnalyzerV3({
+      version: '2017-09-21',
+      iam_apikey: 'P2UPaWmPWixPsdR70AKdKZEJY4HRifMvQ07GYGCgn_rf'
+    });
 
+    var text = agent.parameters.myText;
+    
+    var params = {
+      'tone_input': { 'text': text },
+      'content_type': 'application/json'
+    };
+    return new Promise((resolve, reject) => {
+      toneAnalyzerV3.tone(params, function (err, response) {
+        if (err) {
+          console.log(err);
+          agent.add("There is something wrong with the tone input");
+          reject("Error");
+        }
+        else {
+          let result = JSON.stringify(response, null, 2);
+          var str = "";
+          var categories = response.document_tone.tones;
+          categories.sort(function (a, b) { return b.score - a.score });
+          categories.forEach(element => {
+            if (element.score > 0.5)
+              str += element.tone_name + " :" + element.score + " ,";
+          });
+          console.log(result);
+          agent.add("The tone is " + str);
+          resolve("Good");
+        }
+      });
+    });
+  }
   // Run the proper function handler based on the matched Dialogflow intent name
   let intentMap = new Map();
   intentMap.set('Default Welcome Intent', welcome);
   intentMap.set('Default Fallback Intent', fallback);
   intentMap.set('GetImageDetailIntent', testImage);
   intentMap.set('GetToneDetailIntent', testTone);
+  intentMap.set('ConversationIntent', conversation);
   agent.handleRequest(intentMap);
 });
 
